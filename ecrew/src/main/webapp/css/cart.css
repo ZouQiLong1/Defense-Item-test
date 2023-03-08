@@ -1,0 +1,330 @@
+/* 把我们所有标签的内外边距清零 */
+* {
+    margin: 0;
+    padding: 0
+}
+/* em 和 i 斜体的文字不倾斜 */
+em,
+i {
+    font-style: normal
+}
+/* 去掉li 的小圆点 */
+li {
+    list-style: none
+}
+
+img {
+    /* border 0 照顾低版本浏览器 如果 图片外面包含了链接会有边框的问题 */
+    border: 0;
+    /* 取消图片底侧有空白缝隙的问题 */
+    vertical-align: middle
+}
+
+button {
+    /* 当我们鼠标经过button 按钮的时候，鼠标变成小手 */
+    cursor: pointer
+}
+
+a {
+    color: #666;
+    text-decoration: none
+}
+
+a:hover {
+    color: #c81623
+}
+
+button,
+input {
+    /* "\5B8B\4F53" 就是宋体的意思 这样浏览器兼容性比较好 */
+    font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif
+}
+
+body {
+    /* CSS3 抗锯齿形 让文字显示的更加清晰 */
+    -webkit-font-smoothing: antialiased;
+    background-color: #e7f4fd;
+    font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+    color: #666
+}
+
+.hide,
+.none {
+    display: none
+}
+/* 清除浮动 */
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0
+}
+
+.clearfix {
+    *zoom: 1
+}
+
+#header {
+    background-color: #5492F1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#header a {
+    color: #fff;
+    font-weight: 700;
+}
+.active1 {
+    background-color: #337AB7;
+}
+.login,.register {
+    height: 40px;
+    padding-top: 10px!important;
+    margin-top: 5px;
+}
+.login {
+    margin-right: 10px;
+    color: #fff;
+    background-color: #5492F1;
+}
+.login:hover {
+    background-color: #337AB7;
+}
+
+.w {
+    width: 1400px;
+    margin: 0 auto;
+    /*background-color: pink;*/
+}
+.w table tr {
+    border: 1px solid rgba(0,0,0,.1);
+}
+.all-goods {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.3);
+    background-color: #dbebfd;
+    padding: 10px 10px;
+    margin-bottom: 5px;
+}
+.all-goods > p {
+    float: left;
+    font-size: 16px;
+    color: red;
+    font-weight: 700;
+}
+.location {
+    float: right;
+    font-size: 13px;
+}
+.location select {
+    outline: none;
+}
+.goods-top {
+    font-size: 14px;
+    height: 43px;
+    line-height: 43px;
+    background-color: #F3F3F3;
+}
+.choose-all {
+    padding-left: 10px;
+    width: 110px;
+    /*background-color: red;*/
+}
+.choose-all input {
+    margin-right: 5px;
+}
+.goods {
+    padding-left: 15px;
+    width: 649px;
+    /*background-color: green;*/
+}
+.choose-all1 {
+    padding-left: 10px;
+    width: 110px;
+}
+.choose-all1 input {
+    margin-right: 5px;
+}
+.price-single {
+    text-align: center;
+    width: 110px;
+    /*background-color: yellow;*/
+}
+.number {
+    text-align: center;
+    width: 130px;
+    /*background-color: blueviolet;*/
+}
+.all-price {
+    text-align: center;
+    width: 110px;
+    /*background-color: purple;*/
+}
+.operation {
+    text-align: center;
+    width: 130px;
+    /*background-color: salmon;*/
+}
+.boss input {
+    vertical-align: top;
+    margin-right: 5px;
+}
+.boss {
+    padding: 5px 10px;
+    margin: 5px 0;
+    height: 40px;
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 3px solid rgba(0,0,0,.7);
+}
+.goods-1 {
+    background-color: #fff;
+    /*margin-bottom: 5px*/
+    /*background-color: #67b168;*/
+}
+.goods1 {
+    padding: 10px 0 ;
+}
+.goods1 img {
+    width: 100px;
+    height: 100px;
+    margin-left: 8px;
+    padding: 6px;
+    vertical-align:top;
+}
+.goods-description1 {
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+.goods-description1 p{
+    width: 220px;
+    color: #0f0f0f;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 将对象作为弹性伸缩盒子模型显示 */
+    display: -webkit-box;
+    /* 限制在一个块元素显示的文本的行数 */
+    /* -webkit-line-clamp 其实是一个不规范属性，使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端；*/
+    -webkit-line-clamp: 3;
+    /* 设置或检索伸缩盒对象的子元素的排列方式 */
+    -webkit-box-orient: vertical;
+}
+.user-goods-description1 {
+    display: inline-block;
+}
+.user-goods-description1 p{
+    width: 180px;
+    color: #0f0f0f;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 将对象作为弹性伸缩盒子模型显示 */
+    display: -webkit-box;
+    /* 限制在一个块元素显示的文本的行数 */
+    /* -webkit-line-clamp 其实是一个不规范属性，使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端；*/
+    -webkit-line-clamp: 1;
+    /* 设置或检索伸缩盒对象的子元素的排列方式 */
+    -webkit-box-orient: vertical;
+}
+.left,.right {
+    cursor: pointer;
+    color: #000;
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    background-color: #F1F1F1;
+}
+.number1 {
+    margin-top: -25px;
+    text-align: center;
+}
+.number1 input {
+    display: inline-block;
+    width: 20px;
+}
+.number-detail {
+    display: inline-block;
+    width: 43px;
+    height: 18px;
+    line-height: 18px;
+    margin-left: -4px;
+    margin-right: -4px;
+    background-color: #fff;
+}
+.price-single1 {
+    text-align: center;
+    width: 110px;
+    margin-top: -25px;
+}
+.all-price1 {
+    text-align: center;
+    width: 110px;
+    color: #000;
+    font-weight: 700;
+    margin-top: -25px;
+}
+.operation1 {
+    text-align: center;
+    margin-top: -25px;
+}
+.operation1 a {
+    margin-top: 4px;
+    display: block;
+}
+.operation1 a:hover {
+    text-decoration: none;
+}
+.multiply-operation {
+    width: 550px;
+}
+.multiply-operation a {
+    margin-left: 20px;
+}
+.multiply-operation a:last-child {
+    font-weight: 700;
+}
+.multiply-operation a:hover {
+    text-decoration: none;
+    color: #666666;
+}
+.price {
+    /*width: 200px;*/
+}
+.selected {
+    width: 250px;
+}
+.selected span {
+    color: #E2231A;
+    font-weight: 700;
+}
+/*.footer {*/
+/*    margin-top: 5px!important;*/
+/*}*/
+.total-price {
+    margin-left: 48px;
+}
+.total-price-number {
+    color: #E2231A;
+    font-weight: 700;
+    font-size: 16px;
+}
+.settlement {
+    display: inline-block;
+    text-align: center;
+    width: 150px;
+    height: 45px;
+    background-color: #E2231A;
+    color: #fff;
+}
+.settlement:hover {
+    text-decoration: none;
+    color: #fff;
+}
+.br {
+    border: 0!important;
+}

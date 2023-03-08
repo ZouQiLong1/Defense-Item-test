@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Detail</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Bootstrap的css文件 -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 自定义的首页的css文件 -->
+  <link href="css/detail.css" rel="stylesheet">
+  <link href="css/index.css" rel="stylesheet">
+
+  <!--    bootstrap依赖jquery文件-->
+  <script src="js/jquery-3.3.1/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
+  <!--    bootstrap的js文件-->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script>
+    //页面加载完成函数
+    $(function () {
+      //拿到页面上的请求参数：商品id
+      // js中的方法，获取请求的参数，也就是?后面的那一串；location.search,
+      //将拿到的参数字符串，按照=进行左右截取，取右边的参数
+      var id = location.search.substring(location.search.lastIndexOf("="))[1];
+      $.post("/goods/detail", {"id": id}, function (data) {
+        //修改页面标题
+        $("#title").html(data.title);
+        //修改页面价格
+        $("#price").html(data.price);
+        //修改页面描述
+        $("#description").html(data.description);
+        //修改页面图片展示
+        //先修改最大的那张图片的src
+        $("#big_pic").prop("src", data.pics[0].pic);
+        //定义一个初始化的字符串，方便拼接，修改小图片的src
+        var lis = '';
+        for (let i = 1; i <= data.pics.length - 1; i++) {
+          lis += `<li style="border: 1px solid rgba(0,0,0,.3);margin-left: 5px;"><img src="${data.pics[i].pic}" alt=""></li>`
+        }
+        //将所有的字符串拼接完成之后，将拼接出来的字符串添加到ul中
+        $("#pic").html(lis);
+      });
+
+      //点击加入购物车
+      $("#cart").click(function () {
+        // 拿到商品id，也就是从另外一个页面传递过来的参数id
+        //拿到商品的数量，也就是要添加多少件商品
+        var number = $("#number").text();
+        //发送ajax请求，将上面两个数据传递过去，插入数据库
+        $.post("/goods/addToCart", {"goodsId": id, "number": number}, function (data) {
+          var login_info = "您还未登录,请先登录";
+          if (login_info == data.msg){
+            alert(data.msg);
+            location.href="http://localhost/login.html";
+          } else {
+            alert(data.msg);
+          }
+        });
+      });
+      //点击购买,也就是添加订单表
+      $("#buy").click(function () {
+        //拿到商品id，也就是从另外一个页面传递过来的参数id
+        //拿到商品的数量，也就是要添加多少件商品
+        var number = $("#number").text();
+        //发送ajax请求，将上面两个数据传递过去，插入数据库
+        $.post("/goods/addToOrder", {"goodsId": id, "number": number}, function (data) {
+          var login_info = "您还未登录,请先登录";
+          if (login_info == data.msg){
+            alert(data.msg);
+            location.href="http://localhost/login.html";
+          } else {
+            alert(data.msg);
+          }
+        });
+      });
+    });
+      //商品数量增加的方法
+      function add() {
+        var number = $("#number").text();
+        a = number;
+        a++;
+        $("#number").text(a);
+      }
+
+      //商品数量减少的方法
+      function desc() {
+        var number = $("#number").text();
+        a = number;
+        a--;
+        if (a < 1) {
+          a = 1;
+          alert("最少得添加一件商品");
+        }
+        $("#number").text(a);
+      }
+  </script>
+</head>
+<body>
+<!--导航条-->
+<nav id="header" class="navbar navbar-default top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+<!--      <a class="navbar-brand top-brand" href="#">Brand</a>-->
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav top-nav">
+        <li class="active1"><a href="#">Home page<span class="sr-only">(current)</span></a></li>
+        <li><a href="#">My order</a></li>
+        <li><a href="#">Shopping Cart</a></li>
+        <!--                <li><a href="#">Home page</a></li>-->
+        <!--                <li><a href="#">Favorites</a></li>-->
+        <!--                <li><a href="#">Open a shop for free</a></li>-->
+        <!--                <li><a href="#">Contact customer service</a></li>-->
+
+      </ul>
+      <!--            <form class="navbar-form navbar-left">-->
+      <!--                <div class="form-group">-->
+      <!--                    <input type="text" class="form-control search" placeholder="Enter Brand">-->
+      <!--                </div>-->
+      <!--                <button type="submit" class="btn btn-default search-button">Search</button>-->
+      <!--            </form>-->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" class="btn btn-default login">Log in</a></li>
+        <!--                <li><a href="#" class="btn btn-default register" >Register</a></li>-->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<div class="w">
+  <!--顶部店家介绍-->
+  <!--  <div class="shop clearfix">-->
+  <!--    <div class="shop-left">-->
+  <!--      <span></span>-->
+  <!--      <span>Chanel flagship store</span>-->
+  <!--    </div>-->
+  <!--    <div class="shop-middle">-->
+  <!--      <ul>-->
+  <!--        <li><p>Commodity description</p>-->
+  <!--          <p>4.7</p>-->
+  <!--        </li>-->
+  <!--        <li><p>Commodity description</p>-->
+  <!--          <p>4.7</p>-->
+  <!--        </li>-->
+  <!--        <li><p>Commodity description</p>-->
+  <!--          <p>4.7</p>-->
+  <!--        </li>-->
+  <!--      </ul>-->
+
+  <!--    </div>-->
+  <!--    <div class="shop-right">-->
+  <!--      <span>Contact customer service</span>-->
+  <!--      <span>Enter the store</span>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <!--  中心内容部分-->
+  <div class="body clearfix">
+    <div class="goods-img clearfix">
+      <div class="img">
+        <div class="top-img">
+          <img id="big_pic" src="images/aa.png" alt="">
+        </div>
+        <div class="bottom-img">
+          <ul id="pic">
+<!--            <li><img id="pic1" src="images/aa.png" alt=""></li>-->
+<!--            <li><img src="images/img-1.png" alt=""></li>-->
+<!--            <li><img src="images/img-1.jpg" alt=""></li>-->
+<!--            <li><img src="images/shubao.jpg" alt=""></li>-->
+<!--            <li><img src="images/child_cloth3.webp" alt=""></li>-->
+          </ul>
+        </div>
+      </div>
+      <div class="goods-info">
+        <div class="title" id="title">CHANEL Chanel vintage silk silver thread show lady's thin coat P50579W0559 color 36</div>
+        <div class="price1"> <span>price:</span>￥<span id="price" style="color: red">199.00</span></div>
+        <!--      <div class="goods-description">-->
+        <!--        Chanel clothing is mainly characterized by elegance and simplicity and advocating nature.-->
+        <!--        1. Elegant and concise Chanel clothing always has an elegant, concise and exquisite style, is good at breaking through tradition, liberates women from the shackles of clumsy figure distortion, and emphasizes elegant, concise and convenient clothing, which is the revolutionary vanguard of modern women's clothing.-->
+        <!--      </div>-->
+        <div class="operate">
+          <div class="num">
+            数量:
+            <span  onclick="desc();" style="cursor: pointer">-</span>
+            <div id="number" style="display: inline-block; margin: 0 -3px;  width: 30px;height: 30px; text-align:center; line-height: 30px;border: 1px solid rgba(0,0,0,.6)">1</div>
+            <span onclick="add();" style="cursor: pointer">+</span>
+          </div>
+          <div class="buy">
+            <span style="cursor: pointer" id="cart">add to cart</span>
+            <span style="cursor: pointer" id="buy">Buy now</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="description">
+      <h3>Description:</h3>
+      <p id="description"> Chanel clothing is mainly characterized by elegance and simplicity and advocating nature.
+        1. Elegant and concise Chanel clothing always has an elegant, concise and exquisite style, is good at breaking through tradition, liberates women from the shackles of clumsy figure distortion, and emphasizes elegant, concise and convenient clothing, which is the revolutionary vanguard of modern women's clothing</p>
+    </div>
+  </div>
+</div>
+<!-- 底部开始 -->
+<footer class="footer">
+  <!--            左边公司介绍-->
+  <div class="introduce">
+    <div class="company-logo">
+      <img src="images/logo.png" alt="">
+      <a href="#">XX·Mall</a>
+    </div>
+    <p class="service">Dear customers, we will serve you wholeheartedly</p>
+    <div class="company-address">
+      <i class="glyphicon glyphicon-map-marker"></i>
+      <p>New York, USA</p>
+    </div>
+    <div class="company-email">
+      <i class="glyphicon glyphicon-envelope"></i>
+      <p>jack@123.com</p>
+    </div>
+    <div class="company-phone">
+      <i class="glyphicon glyphicon-earphone"></i>
+      <p>+086 555 55555555</p>
+    </div>
+  </div>
+  <!--            <div class="contact">-->
+  <!--                <dl>-->
+  <!--                    <dt>Quick link</dt>-->
+  <!--                    <dd><a href="#"><i>&gt</i>Home page</a></dd>-->
+  <!--                    <dd><a href="#"><i>&gt</i>Mall</a></dd>-->
+  <!--                    <dd><a href="#"><i>&gt</i>Commodity details</a></dd>-->
+  <!--                    <dd><a href="#"><i>&gt</i>Shopping Cart</a></dd>-->
+  <!--                    <dd><a href="#"><i>&gt</i>Order</a></dd>-->
+  <!--                    <dd><a href="#"><i>&gt</i>Contact us</a></dd>-->
+  <!--                </dl>-->
+  <!--            </div>-->
+
+  <div class="join">
+
+    <h4>Join us.</h4>
+    <form action="">
+      <div class="form-group">
+        <input type="text" class="form-control border-0 py-4" placeholder="Your name." required="required" />
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control border-0 py-4" placeholder="Your cell phone number"
+               required="required" />
+      </div>
+      <div>
+        <button class="btn btn-primary btn-block border-0 py-3" type="submit">Join now</button>
+      </div>
+    </form>
+
+  </div>
+</footer>
+</body>
+</html>

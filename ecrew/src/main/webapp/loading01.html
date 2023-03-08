@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Home page</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Bootstrap的css文件 -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 自定义的首页的css文件 -->
+  <link href="css/loading01.css" rel="stylesheet">
+
+  <!--    bootstrap依赖jquery文件-->
+  <script src="js/jquery-3.3.1/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
+  <!--    bootstrap的js文件-->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <!--    index页面的js文件-->
+  <script src="js/a.js"></script>
+  <script>
+
+    //页面加载完成函数
+    $(function () {
+      //定义一个最初始的变量
+      var a = 2;
+      $("#time").html(a);
+      // 将这个a赋值给页面上
+      function desc(){
+        a --;
+        $("#time").html(a);
+        if (a < 1){
+          location.href = "/cart.html";
+        }
+      }
+      setInterval(desc,1000)
+    });
+
+  </script>
+</head>
+<body>
+  <div class="tankuang">
+    购买成功
+    <div class="loading"><img src="images/成功.png" alt="">
+        购买成功，<span style="color: red ; font-weight: 700" id="time"></span>秒跳转页面...
+    </div>
+    <div class="confirm">确定</div>
+  </div>
+</body>
+</html>

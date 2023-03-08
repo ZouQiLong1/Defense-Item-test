@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Shopping Cart</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <!-- Bootstrap的css文件 -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 自定义的首页的css文件 -->
+    <link href="./css/cart.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+
+    <!--    bootstrap依赖jquery文件-->
+    <script src="./js/jquery-3.3.1/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
+    <!--    bootstrap的js文件-->
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <!--    index页面的js文件-->
+    <script src="./js/index.js"></script>
+    <script>
+            $(function (){
+            //在页面一加载完成之后,就发送ajax请求,拿到购物车中的数据
+            $.get("/cart/cartInfo",{},function(data){
+                //拿到我们需要的数据之后,就开始循环遍历渲染界面
+                //首先,先定义一个最初始的字符串,保存整个表的头部
+                var lis = '        <tr class="goods-top">\n' +
+                    '            <td><div class="choose-all"><input type="checkbox" name="" id="choose">Select all</div></td>\n' +
+                    '            <td><div class="goods">Merchandise</div></td>\n' +
+                    '            <td><div class="price-single">Unit price</div></td>\n' +
+                    '            <td><div class="number">Quantity</div></td>\n' +
+                    '            <td><div class="all-price">Subtotal</div></td>\n' +
+                    '            <td><div class="operation">Operation</div></td>\n' +
+                    '        </tr>\n' +
+                    '        <tr>\n' +
+                    '            <td colspan="6">\n' +
+                    '                <div class="boss">Ecrew 商城</div>\n' +
+                    '            </td>\n' +
+                    '        </tr>';
+                //循环data中的数据,给lis添加字符串,也就是表格的主体
+                for (let i = 0; i < data.length; i++) {
+                    //在页面第一次渲染的时候，就需要计算一个总价，放在页面上，
+                    let price = `${data[i].commodity.price}`;
+                    let number = `${data[i].number}`
+                    let subTotal = price * number;
+                    lis += `        <tr class="goods-1">
+                                <td><div class="choose-all1"><input type="checkbox" name="goodsId" class="item" value="${data[i].goodsId}"  id=""></div></td>
+                                <td><div class="goods1">
+                                    <div style="display: none" id="goodsId" class="id">${data[i].goodsId}</div>
+                                    <img src="${data[i].commodity.pics[0].pic}" alt="">
+                                    <div class="goods-description1"><p>${data[i].commodity.title}</p></div>
+                                    <div class="user-goods-description1"><p>${data[i].commodity.description}</p></div>
+                                </div></td>
+                                <td><div class="price-single1"><span>$</span><span>${data[i].commodity.price}</span></div></td>
+                                <td><div class="number1 change">
+                                    <span class="left">-</span>
+                                    <span class="number-detail num" id="number">${data[i].number}</span>
+                                    <span class="right">+</span>
+                                </div></td>
+                                <td><div class="all-price1"><span>$</span><span class="price1">${subTotal}</span></div></td>
+                                <td><div class="operation1">
+                                    <a href="javascript:void(0)" class="del">Delete</a>
+                                </div>
+                                </td>
+                            </tr>`;
+                }
+                //将所有的数据添加完成之后,将表的底部也添加上
+                lis += ` <tr class="br">
+                            <td ><br></td>
+                        </tr>
+                        <tr class="goods-top">
+                            <td><div class="choose-all choose-all2"><input type="checkbox" name=""  id="all">Select all</div></td>
+                            <td><div class="multiply-operation">
+                            </div></td>
+                            <td><div class="selected"><span>0</span> items have been selected</div></td>
+                            <td rowspan="55"><div class="total-price">
+                                Total price:
+                            </div></td>
+                            <td>
+                                <span class="total-price-number">$</span>
+                                <span class="total-price-number all">0.00</span>
+                            </td>
+                            <td><input type="submit" value="结算" style="border: none ;width: 200px; background-color:red; color: #fff"></td>
+                        </tr>`;
+
+                //当页面上的所有数据添加完成之后,将拼接的 字符串放入到table中
+                $("#table").html(lis);
+
+                //全选和反选方法
+                selectAll();
+
+                //点击+，数量增加的方法
+                add();
+
+                //点击-，数量减少的方法
+                desc();
+
+                //计算每个单间商品的总价的方法
+                $(".item").click(function () {
+                    //当每一项前面的checkbox被点击的时候，就调用渲染选中数量的方法
+                    checkeds();
+                    //因为要计算总金额，因此在每次点击每项的input的时候，都需要重新调用渲染总金额的方法
+                    all();
+                });
+
+                //点击删除按钮的方法，删除购物车
+                deleteCart();
+
+                //清空选中的购物车的方法
+                clear();
+            });
+
+        });
+
+        //全选和反选的方法
+        function selectAll() {
+            //拿到点击全选的按钮，给他添加点击事件
+            $("#choose").click(function () {
+                //点击之后，每个子项的checkbox都设置为和他一样的点击状态
+                $(".item").prop('checked',$(this).prop('checked'))
+                //当点击全选的时候，也需要调用渲染选中的数量的方法
+                checkeds();
+                //因为要计算总金额，因此在每次点击全选的input框的时候，都需要重新调用渲染总金额的方法
+                all();
+            });
+            $("#all").click(function () {
+                //点击之后，每个子项的checkbox都设置为和他一样的点击状态
+                $(".item").prop('checked',$(this).prop('checked'))
+                //当点击全选的时候，也需要调用渲染选中的数量的发放
+                checkeds();
+                //因为要计算总金额，因此在每次点击全选的input框的时候，都需要重新调用渲染总金额的方法
+                all();
+            });
+        }
+
+        //商品数量增加的方法,
+        // 注意：拿加减号和数量的时候，需要使用找上一级下一级元素的方法来设置，这样能确保拿到的三个元素都在同一个tr中
+        function add() {
+            //拿到+号，绑定单击事件，给num重新赋值
+            $(".right").click(function () {
+                //首先，拿到当前number的值
+                let $number = parseInt($(this).prev().html());
+                //给当前的number + 1
+                $(this).prev().html($number + 1);
+                //调用刷新总价的方法，必须要传入参数，这里的参数是+
+                subTotal($(this));
+                //因为要计算总金额，因此在每次点击数量增加的框，都需要重新调用渲染总金额的方法
+                all();
+                //因为每次在页面上点击增加和删除的时候，对应的数据库中的数据也要发送变化;因此在这里需要发送ajax请求，修改数据库中的数据
+                //首先需要拿到页面上的商品的id，goodsId
+                let id = $(this).parent().parent().prev().prev().children().find("#goodsId").html();
+                $.post("/goods/addToCart", {"goodsId": id, "number": 1}, function (data) {
+                });
+            });
+        }
+
+        //商品数量减少的方法，绑定点击事件
+        // 注意：拿加减号和数量的时候，需要使用找上一级下一级元素的方法（父子兄弟）来设置，这样能确保拿到的三个元素都在同一个tr中
+        function desc() {
+            //拿到-号，绑定单击事件
+            $(".left").click(function (){
+                //拿到number的值
+               let $num = parseInt($(this).next().html());
+                let num = $num - 1;
+               //判断一下，商品至少为一件
+               if ($num < 2) {
+                   alert("商品的数量不能小于1");
+                   $num = 2;
+               }
+                //给number重新赋值，
+                $(this).next().html($num - 1);
+                //调用刷新总价的方法,必须要传入参数，这里的参数是+
+                subTotal($(this).next().next())
+                //因为要计算总金额，因此在每次点击数量减少的框，都需要重新调用渲染总金额的方法
+                all();
+                //因为每次在页面上点击增加和删除的时候，对应的数据库中的数据也要发送变化;因此在这里需要发送ajax请求，修改数据库中的数据
+                //首先需要拿到页面上的商品的id，goodsId
+                let id = $(this).parent().parent().prev().prev().children().find("#goodsId").html();
+                $.post("/goods/descToCart", {"goodsId": id, "number": 1}, function (data) {
+                });
+            });
+        }
+
+        //这个方法用来计算每件商品的价格
+        function subTotal(_this) {
+            //先拿到页面上的+号元素，这个+号元素是通过参数传递过来的
+            let $add = _this;
+            //必须要通过参数传递过来的+号的父元素td的上一个元素td的子元素div，拿到价格，这样才能确保他们是属于同一模块中的
+            let $price = $add.parent().parent().prev().children().children().next();
+            //拿到单价
+            let $price1 = parseInt($price.html());
+
+            //必须要通过参数传递过来的+号的上一个元素拿到number，这样才能确保他们是属于同一模块中的
+            let $num = $add.prev();
+            //拿到数量
+            let $num1 = parseInt($num.html());
+            //必须要通过参数传递过来的+号的父级元素td的下一个元素td的子元素div，拿到总价，这样才能确保他们是属于同一模块中的
+            let $all = $add.parent().parent().next().children().find(".price1");
+            //计算总量，然后给总价赋值
+            $all.html($price1 * $num1);
+        }
+
+        //判断有几条数据被选中了，用来渲染页面
+        function checkeds() {
+            //获得页面上循环出来的item
+            let items=document.getElementsByClassName("item");
+            let count = 0;  //定义一个变量，用来计算页面上被选中的item的数量
+            for (let i = 0; i < items.length;i++){
+                //循环遍历每项item，如果item的checked属性为真，就计数++
+                if(items[i].checked){
+                    count+=1;
+                }
+                //如果有一个checkbox的选中状态为false，那么选择全部的checkbox就为false
+                if(!items[i].checked){
+                    $("#choose").prop("checked",false);
+                    $("#all").prop("checked",false);
+                }
+            }
+            //设置好内容中的所有的值之后，将这个值渲染在页面上
+            $(".selected").find("span").html(count)
+        }
+
+        //计算整个页面上的总价，购物车的总价
+        function all() {
+            //0.定义一个变量，用来保存整个购物车的总价
+            let all = 0;
+            //1.拿到页面上的商品的选中状态
+            //1.1获得页面上循环出来的item
+            let items=document.getElementsByClassName("item");
+            //1.2循环遍历页面上checkbox
+            for (let i = 0; i < items.length;i++){
+                //2.判断页面的选中状态，如果勾选，将每件勾选的商品的总价进行累加
+                if(items[i].checked){
+                    all += parseInt($(".price1")[i].innerHTML);
+                }
+            }
+            //  如果页面上没有数据被选中，就不进行累加
+            //最后再将累加的结果渲染到页面上的总价的位置
+            $(".all").html(all)
+        }
+
+        //发送ajax请求，删除购物车中的订单数据
+            function deleteCart() {
+            //拿到删除按钮的点击事件
+            $(".del").click(function () {
+                //在用户删除之前，给用户一个弹框，让用户确认一下
+                if (window.confirm("您确定要删除吗？")){
+                    //拿到删除的这条商品的id
+                    var id = $(this).parent().parent().prev().prev().prev().prev().children().find("#goodsId").html();
+                    // 发送aja请求，传递的参数是该商品的id
+                    $.post("cart/deleteCart",{"goodsId":id},function (data){
+                        if (data.flag){
+                            alert(data.msg);
+                            location.reload();
+                        } else {
+                            alert(data.msg)
+                        }
+                    });
+                }
+                //如果用户点击false，就什么都不做
+            });
+            }
+        //清空选中的购物车的方法
+        function clear() {
+            $("#clear").click(function () {
+                //当前及clear的时候，也就是表单提交
+                //在表单提交的时候，return一个false，页面就不会发生跳转
+                return false;
+            });
+            }
+
+    </script>
+</head>
+
+<body>
+<!--导航条-->
+<nav id="header" class="navbar navbar-default top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+<!--            <a class="navbar-brand top-brand" href="#">Brand</a>-->
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav top-nav">
+                <li><a href="/index.html">Home page<span class="sr-only">(current)</span></a></li>
+                <li><a href="/order.html">My order</a></li>
+                <li class="active1"><a href="#">Shopping Cart</a></li>
+<!--                <li><a href="#">Home page</a></li>-->
+<!--                <li><a href="#">Favorites</a></li>-->
+<!--                <li><a href="#">Open a shop for free</a></li>-->
+<!--                <li><a href="#">Contact customer service</a></li>-->
+
+            </ul>
+<!--            <form class="navbar-form navbar-left">-->
+<!--                <div class="form-group">-->
+<!--                    <input type="text" class="form-control search" placeholder="Enter Brand">-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-default search-button">Search</button>-->
+<!--            </form>-->
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/login.html" class="btn btn-default login">Log in</a></li>
+                <li><a href="register.html" class="btn btn-default login" >Register</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!--中心主体内容-->
+<div class="w">
+    <div class="all-goods clearfix">
+        <p>All goods</p>
+<!--        <div class="location">Distribute to:-->
+<!--            <select name="" id="">-->
+<!--            <option value="">New York, USA</option>-->
+<!--        </select></div>-->
+    </div>
+    <form action="/cart/clear" id="form" method="post">
+    <table id="table">
+    </table>
+    </form>
+</div>
+<!-- 底部开始 -->
+<footer class="footer">
+    <!--            左边公司介绍-->
+    <div class="introduce">
+        <div class="company-logo">
+            <img src="images/logo.png" alt="">
+            <a href="#">XX·Mall</a>
+        </div>
+        <p class="service">Dear customers, we will serve you wholeheartedly</p>
+        <div class="company-address">
+            <i class="glyphicon glyphicon-map-marker"></i>
+            <p>New York, USA</p>
+        </div>
+        <div class="company-email">
+            <i class="glyphicon glyphicon-envelope"></i>
+            <p>jack@123.com</p>
+        </div>
+        <div class="company-phone">
+            <i class="glyphicon glyphicon-earphone"></i>
+            <p>+086 555 55555555</p>
+        </div>
+    </div>
+    <!--            <div class="contact">-->
+    <!--                <dl>-->
+    <!--                    <dt>Quick link</dt>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Home page</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Mall</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Commodity details</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Shopping Cart</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Order</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Contact us</a></dd>-->
+    <!--                </dl>-->
+    <!--            </div>-->
+
+    <div class="join">
+
+        <h4>Join us.</h4>
+        <form action="">
+            <div class="form-group">
+                <input type="text" class="form-control border-0 py-4" placeholder="Your name." required="required" />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control border-0 py-4" placeholder="Your cell phone number"
+                       required="required" />
+            </div>
+            <div>
+                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Join now</button>
+            </div>
+        </form>
+
+    </div>
+</footer>
+<!-- 底部结束 -->
+</body>
+</html>

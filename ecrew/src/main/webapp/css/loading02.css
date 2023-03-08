@@ -1,0 +1,259 @@
+/* 把我们所有标签的内外边距清零 */
+* {
+    margin: 0;
+    padding: 0
+}
+/* em 和 i 斜体的文字不倾斜 */
+em,
+i {
+    font-style: normal
+}
+/* 去掉li 的小圆点 */
+li {
+    list-style: none
+}
+
+img {
+    /* border 0 照顾低版本浏览器 如果 图片外面包含了链接会有边框的问题 */
+    border: 0;
+    /* 取消图片底侧有空白缝隙的问题 */
+    vertical-align: middle
+}
+
+button {
+    /* 当我们鼠标经过button 按钮的时候，鼠标变成小手 */
+    cursor: pointer
+}
+
+a {
+    color: #666;
+    text-decoration: none
+}
+
+a:hover {
+    color: #c81623
+}
+
+button,
+input {
+    /* "\5B8B\4F53" 就是宋体的意思 这样浏览器兼容性比较好 */
+    font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif
+}
+
+body {
+    /* CSS3 抗锯齿形 让文字显示的更加清晰 */
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+    color: #666
+}
+
+.hide,
+.none {
+    display: none
+}
+/* 清除浮动 */
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0
+}
+
+.clearfix {
+    zoom: 1
+}
+/*.big-bounce {*/
+/*    float: left;*/
+/*}*/
+.top {
+    background-color: rgba(0,0,0,.2);
+}
+.tankuang {
+    position: relative;
+    margin: 20px auto;
+    padding: 7px 20px;
+    width: 400px;
+    height: 150px;
+    /*background-color: pink;*/
+    background: url("../images/toast.png") no-repeat -47px -29px;
+    background-size: 515px 205px;
+    /*border:1px solid rgba(0,0,0,.1);*/
+    border-radius: 10px;
+}
+/*.top {*/
+/*    height: 300px;*/
+/*    background-color: rgba(0,0,0,.05);*/
+/*    border-radius: 60px;*/
+/*    margin-top: -125px;*/
+/*}*/
+.bounce {
+    position: relative;
+    float: left;
+    margin: 0 40px;
+    width: 300px;
+    height: 410px;
+    background-color: #fff;
+    /*background-color: pink;*/
+    border-radius: 40px;
+    border: 1px solid rgba(0,0,0,.1);
+}
+.bounce img {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.circle-green {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #52C41A;
+}
+.circle-red {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #E84335;
+}
+.circle1 {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 68px;
+    left: 93px;
+}
+.circle2 {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    top: 113px;
+    left: 169px;
+}
+.circle3 {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 60px;
+    left: 90px;
+}
+.circle4 {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 40px;
+    left: 183px;
+}
+.circle5 {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    top: 47px;
+    left: 50px;
+}
+.circle6 {
+     width: 11px;
+     height: 11px;
+     position: absolute;
+     top: 124px;
+     left: 81px;
+ }
+.circle7 {
+    width: 11px;
+    height: 11px;
+    position: absolute;
+    top: 142px;
+    left: 206px;
+}
+.circle8 {
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 144px;
+    left: 230px;
+}
+.title {
+    position: relative;
+    color: #52C41A;
+    font-size: 24px;
+    font-weight: 700;
+    width: 126px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    /*top: 225px;*/
+    /*left: 108px;*/
+}
+.title1 {
+    position: relative;
+    color: #E84335;
+    font-size: 24px;
+    font-weight: 700;
+    width: 90px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    /*top: 225px;*/
+    /*left: 108px;*/
+}
+.description1 {
+    position: relative;
+    color: #969696;
+    font-size: 14px;
+    top: 200px;
+    left: 80px;
+}
+.description2 {
+    position: relative;
+    color: #969696;
+    font-size: 14px;
+    top: 200px;
+    left: 103px;
+}
+.continue {
+    position: relative;
+    cursor: pointer;
+    width: 150px;
+    height: 52px;
+    background-color: #5cc926;
+    text-align: center;
+    line-height: 52px;
+    font-weight: 700;
+    border-radius: 20px;
+    color: #F1F1F1;
+    font-size: 18px;
+    top: 240px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 3px 4px 11px 0px rgba(0, 0, 0, .5);
+}
+/*.shadow {*/
+/*    position: relative;*/
+/*    display: inline-block;*/
+/*    top: -96%;*/
+/*    left: -98%;*/
+/*    transform: translateX(24%);*/
+/*    width: 600px;*/
+/*    height: 600px;*/
+/*    border-radius: 50%;*/
+/*    background-color: #F7F7F5;*/
+/*}*/
+.continue1 {
+    position: relative;
+    cursor: pointer;
+    width: 150px;
+    height: 52px;
+    background-color: #E84335;
+    text-align: center;
+    line-height: 52px;
+    font-weight: 700;
+    border-radius: 20px;
+    color: #F1F1F1;
+    font-size: 18px;
+    top: 240px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 3px 4px 11px 0px rgba(0, 0, 0, .5);
+}
+

@@ -1,0 +1,203 @@
+/* 把我们所有标签的内外边距清零 */
+* {
+    margin: 0;
+    padding: 0
+}
+@media screen  and (min-width: 1200px){
+    .container{
+        width: 100%;
+    }
+}
+/* em 和 i 斜体的文字不倾斜 */
+em,
+i {
+    font-style: normal
+}
+/* 去掉li 的小圆点 */
+li {
+    list-style: none
+}
+
+img {
+    /* border 0 照顾低版本浏览器 如果 图片外面包含了链接会有边框的问题 */
+    border: 0;
+    /* 取消图片底侧有空白缝隙的问题 */
+    vertical-align: middle
+}
+
+button {
+    /* 当我们鼠标经过button 按钮的时候，鼠标变成小手 */
+    cursor: pointer
+}
+
+a {
+    color: #666;
+    text-decoration: none
+}
+
+a:hover {
+    color: #c81623
+}
+
+button,
+input {
+    /* "\5B8B\4F53" 就是宋体的意思 这样浏览器兼容性比较好 */
+    font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif
+}
+
+body {
+    /* CSS3 抗锯齿形 让文字显示的更加清晰 */
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+    color: #666
+}
+
+.hide,
+.none {
+    display: none
+}
+/* 清除浮动 */
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0
+}
+
+.clearfix {
+    *zoom: 1
+}
+header {
+    width: 1100px;
+    height: 100px;
+    overflow: hidden;
+    padding: 15px 30px;
+    margin: 0 auto;
+}
+.logo {
+    width: 74px;
+    height: 74px;
+    padding: 0;
+}
+.logo img {
+    width: 100%;
+    height: 100%;
+}
+.mall {
+    margin-top: 10px;
+    margin-left: 180px;
+    /*padding-top: 10px;*/
+    padding-left: 20px;
+    margin-bottom: 20px;
+    border-left: 1px solid rgba(0,0,0,.2);
+}
+.mall p:first-child {
+    font-size: 15px;
+}
+.mall p:last-child {
+    font-size: 14px;
+}
+.bg-image {
+    display: flex;
+    /*background: url("../images/aa.png") no-repeat;*/
+    background-image:-webkit-linear-gradient(top, rgb(84,164,241),rgb(168, 207, 243)) ;
+    /*background-color: #5492F1;*/
+    /*background-size: 100%;*/
+    width: 1518px;
+    height: 684px;
+}
+.logo-text{
+    display: inline-block;
+    width: 280px;
+    height: 280px;
+    margin: 145px 0px  0px 180px;
+
+}
+.logo-text img{
+    width: 100%;
+    height: 100%;
+    vertical-align:middle;
+}
+.login {
+    display: inline-block;
+    margin: 110px 40px 0 850px;
+    /*margin-left: 340px;*/
+    padding: 20px;
+    width: 380px;
+    height: 540px;
+    background-color: rgba(255,255,255,.9);
+}
+.login p {
+    font-size: 20px;
+    text-align: center;
+    color: #0f0f0f;
+    font-weight: 700;
+}
+.account {
+    width: 300px;
+    padding: 3px;
+}
+.glyphicon-user {
+    display: inline-block;
+    text-align: center;
+    line-height: 32px;
+    font-size: 17px;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+    width: 33px;
+    height: 33px;
+    background-color: #c0bcbc;
+    vertical-align: middle;
+}
+.glyphicon-lock {
+    display: inline-block;
+    text-align: center;
+    line-height: 32px;
+    font-size: 17px;
+    color: #ffff;
+    margin-bottom: 5px;
+    width: 33px;
+    height: 33px;
+    background-color: #c0bcbc;
+    vertical-align: middle;
+}
+.button {
+    display: inline-block;
+    margin-left: 0;
+    width: 270px;
+}
+.info {
+    margin-top: 30px;
+    margin-left: 25px!important;
+}
+.remember {
+    margin-left: 240px;
+    font-size: 14px;
+}
+.login-button {
+    margin-top: 20px;
+    margin-left: 0px;
+    width: 249px;
+}
+.forget {
+    margin-top: 20px;
+    margin-left: 310px;
+}
+.forget a {
+    font-size: 13px;
+}
+.forget a:hover {
+    text-decoration: none;
+}
+.footer {
+    margin-top: 10px;
+    margin-left: -15px!important;
+    padding: 0!important;
+    width: 1518px;
+    height: 80px;
+    background-color: #333333;
+}
+
+

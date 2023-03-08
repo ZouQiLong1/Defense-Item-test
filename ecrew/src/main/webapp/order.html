@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Order</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Bootstrap的css文件 -->
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 自定义的首页的css文件 -->
+  <link href="css/order.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+  <!--    bootstrap依赖jquery文件-->
+  <script src="js/jquery-3.3.1/jquery-3.3.1/jquery-3.3.1.min.js"></script>
+
+  <!--    bootstrap的js文件-->
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        // 页面加载完成函数
+        $(function () {
+            //在页面一加载完成之后,就发送ajax请求,拿到购物车中的数据
+            $.get("/cart/orderInfo",{},function(data){
+                //拿到我们需要的数据之后,就开始循环遍历渲染界面
+                //首先,先定义一个最初始的字符串,保存整个表的头部
+                var lis = '        <tr class="table-top">\n' +
+                    '          <td><div class="goods goods1">Merchandise</div></td>\n' +
+                    '          <td><div class="price-single price-single1">Actual payment</div></td>\n' +
+                    '        </tr>';
+                //循环data中的数据,给lis添加字符串,也就是表格的主体
+                for (let i = 0; i < data.length; i++) {
+                    lis += `     <tr class="table-top1">
+                              <td colspan="2"><div class="check">
+                                <!--            <input type="checkbox" name="" id="">-->
+                                <span>${data[i].date}</span>
+                                Order number:<span style="margin-left: 8px;">${data[i].date.split("-")[0]}${data[i].date.split("-")[2]}${data[i].date.split("-")[1]}${data[i].date.split("-")[1]}${data[i].date.split("-")[0]}${data[i].date.split("-")[2]}</span>
+                              </td>
+                            </tr>
+                            <tr class="table-top2">
+                              <td>
+                                <div class="goods goods2 clearfix">
+                                  <div class="img"><img src="${data[i].commodity.pics[0].pic}" style="width: 85px; height: 86px;" alt=""></div>
+                                  <p>${data[i].commodity.title}</p>
+                                </div>
+                              </td>
+                              <td>  <div class="price-single price-single1">$${data[i].commodity.price}</div></td>
+                            </tr>`;
+                }
+                //当页面上的所有数据添加完成之后,将拼接的 字符串放入到table中
+                $("#table").html(lis);
+            });
+        });
+        function add(index) {
+            var number = $("#"+index+"").text(parseInt($("#number").text()) + 1);
+
+        }
+
+        //商品数量减少的方法
+        function desc(index) {
+            var number = $("#number "+index+" ").text();
+            a = number;
+            a--;
+            if (a < 1) {
+                a = 1;
+                alert("最少得添加一件商品");
+            }
+            $("#number "+index+"").text(a);
+        }
+    </script>
+</head>
+
+<!--导航条-->
+<nav id="header" class="navbar navbar-default top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+<!--      <a class="navbar-brand top-brand" href="#">Brand</a>-->
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav top-nav">
+        <li ><a href="/index.html">Home page<span class="sr-only">(current)</span></a></li>
+        <li class="active1"><a href="#">My order</a></li>
+        <li><a href="/cart.html">Shopping Cart</a></li>
+        <!--                <li><a href="#">Home page</a></li>-->
+        <!--                <li><a href="#">Favorites</a></li>-->
+        <!--                <li><a href="#">Open a shop for free</a></li>-->
+        <!--                <li><a href="#">Contact customer service</a></li>-->
+
+      </ul>
+      <!--            <form class="navbar-form navbar-left">-->
+      <!--                <div class="form-group">-->
+      <!--                    <input type="text" class="form-control search" placeholder="Enter Brand">-->
+      <!--                </div>-->
+      <!--                <button type="submit" class="btn btn-default search-button">Search</button>-->
+      <!--            </form>-->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/login.html" class="btn btn-default login">Log in</a></li>
+          <li><a href="/register.html" class="btn btn-default login" >Register</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!--版心部分-->
+<div class="w clearfix">
+    <div class="Catalogue">
+      <ul class="nav nav-pills ">
+        <li role="presentation" class="active"><a href="#">All orders</a></li>
+<!--        <li role="presentation"><a href="#">Pending payment</a></li>-->
+<!--        <li role="presentation"><a href="#">To be delivered</a></li>-->
+<!--        <li role="presentation"><a href="#">Goods to be received</a></li>-->
+<!--        <li role="presentation"><a href="#">To be evaluated</a></li>-->
+      </ul>
+    </div>
+    <div class="Catalogue-detail">
+      <table id="table">
+        <tr class="table-top">
+          <td><div class="goods goods1">Merchandise</div></td>
+          <td><div class="price-single price-single1">Actual payment</div></td>
+<!--          <td><div class="number number1">Quantity</div></td>-->
+<!--          <td><div class="all-price all-price1">Transaction status</div></td>-->
+<!--          <td><div class="operation operation1">Transaction operation</div></td>-->
+        </tr>
+      </table>
+
+    </div>
+</div>
+<!-- 底部开始 -->
+<footer class="footer">
+    <!--            左边公司介绍-->
+    <div class="introduce">
+        <div class="company-logo">
+            <img src="images/logo.png" alt="">
+            <a href="#">XX·Mall</a>
+        </div>
+        <p class="service">Dear customers, we will serve you wholeheartedly</p>
+        <div class="company-address">
+            <i class="glyphicon glyphicon-map-marker"></i>
+            <p>New York, USA</p>
+        </div>
+        <div class="company-email">
+            <i class="glyphicon glyphicon-envelope"></i>
+            <p>jack@123.com</p>
+        </div>
+        <div class="company-phone">
+            <i class="glyphicon glyphicon-earphone"></i>
+            <p>+086 555 55555555</p>
+        </div>
+    </div>
+    <!--            <div class="contact">-->
+    <!--                <dl>-->
+    <!--                    <dt>Quick link</dt>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Home page</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Mall</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Commodity details</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Shopping Cart</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Order</a></dd>-->
+    <!--                    <dd><a href="#"><i>&gt</i>Contact us</a></dd>-->
+    <!--                </dl>-->
+    <!--            </div>-->
+
+    <div class="join">
+
+        <h4>Join us.</h4>
+        <form action="">
+            <div class="form-group">
+                <input type="text" class="form-control border-0 py-4" placeholder="Your name." required="required" />
+            </div>
+            <div class="form-group">
+                <input type="email" class="form-control border-0 py-4" placeholder="Your cell phone number"
+                       required="required" />
+            </div>
+            <div>
+                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Join now</button>
+            </div>
+        </form>
+
+    </div>
+</footer>
+<!-- 底部结束 -->
+
+
+<body>
+
+</body>
+</html>

@@ -1,0 +1,342 @@
+/* 把我们所有标签的内外边距清零 */
+* {
+    margin: 0;
+    padding: 0
+}
+/* em 和 i 斜体的文字不倾斜 */
+em,
+i {
+    font-style: normal
+}
+/* 去掉li 的小圆点 */
+li {
+    list-style: none
+}
+
+img {
+    /* border 0 照顾低版本浏览器 如果 图片外面包含了链接会有边框的问题 */
+    border: 0;
+    /* 取消图片底侧有空白缝隙的问题 */
+    vertical-align: middle
+}
+
+button {
+    /* 当我们鼠标经过button 按钮的时候，鼠标变成小手 */
+    cursor: pointer
+}
+
+a {
+    color: #666;
+    text-decoration: none
+}
+
+/*a:hover {*/
+/*    color: #c81623*/
+/*}*/
+
+button,
+input {
+    /* "\5B8B\4F53" 就是宋体的意思 这样浏览器兼容性比较好 */
+    font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif
+}
+
+body {
+    /* CSS3 抗锯齿形 让文字显示的更加清晰 */
+    -webkit-font-smoothing: antialiased;
+    background-color: #fff;
+    font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+    color: #666
+}
+
+.hide,
+.none {
+    display: none
+}
+/* 清除浮动 */
+.clearfix:after {
+    visibility: hidden;
+    clear: both;
+    display: block;
+    content: ".";
+    height: 0
+}
+
+.clearfix {
+    *zoom: 1
+}
+body {
+    background-color: #e7f4fd;
+}
+#header {
+    background-color: #5492F1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+#header a {
+    color: #fff;
+    font-weight: 700;
+}
+.active1 {
+    background-color: #337AB7;
+}
+.login,.register {
+    height: 40px;
+    padding-top: 10px!important;
+    margin-top: 5px;
+}
+.login {
+    margin-right: 10px;
+    color: #fff;
+    background-color: #5492F1;
+}
+.login:hover {
+    background-color: #337AB7;
+}
+.top {
+    margin: 10px 0;
+}
+.top-brand {
+    text-align: center;
+    width: 100px;
+}
+.login,.register {
+    height: 40px;
+    padding-top: 10px!important;
+    margin-top: 5px;
+}
+.search {
+    width: 400px!important;
+}
+.search-button {
+    font-size: 15px;
+}
+.top-nav li {
+    font-size: 14px;
+}
+.first-sort {
+    margin: 7px 0;
+    padding: 3px 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    border-top: 1px solid rgba(0,0,0,.3);
+}
+.login {
+    margin-right: 10px;
+}
+.body-swiper {
+    width: 1903px;
+    height: 450px;
+}
+.second-sort {
+    background-color: #fff;
+    float: left;
+    overflow: auto;
+    width: 300px;
+    height: 450px;
+}
+.sanjiao {
+    margin-left: 180px;
+}
+
+.swiper {
+    float: right;
+    margin: 0 0 0 20px;
+    width: 1580px;
+    height: 450px;
+}
+.swiper-item {
+    width: 1300px;
+    height: 450px;
+}
+.item image {
+    margin-bottom: 200px;
+}
+.goods-show {
+    width: 1580px;
+    margin: 0 auto;
+    padding:20px;
+}
+.goods-show ul li {
+     border: 1px solid rgba(0,0,0,0.1);
+    background-color: #fff;
+     float: left;
+     margin-right: 10px;
+     margin-bottom: 10px;
+    transition: all 0.4s;
+ }
+.goods-show ul li:hover {
+    border: 1px solid rgba(0,0,0,0.4);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .4);
+    transform: translateY(-1px);
+}
+.goods-show ul li:nth-of-type(5n) {
+    margin-right: 0;
+}
+.goods-detail {
+    width: 300px;
+    height: 400px;
+    padding: 8px 12px;
+}
+.goods-detail img {
+    width: 100%;
+}
+.price {
+    margin: 12px 0;
+}
+.price span:first-child{
+    float:left;
+    font-size: 18px;
+    color: red;
+    font-weight: 700;
+}
+.price span:nth-of-type(2){
+    float:right!important;
+    font-size: 12px;
+}
+.description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* 将对象作为弹性伸缩盒子模型显示 */
+    display: -webkit-box;
+    /* 限制在一个块元素显示的文本的行数 */
+    /* -webkit-line-clamp 其实是一个不规范属性，使用了WebKit的CSS扩展属性，该方法适用于WebKit浏览器及移动端；*/
+    -webkit-line-clamp: 2;
+    /* 设置或检索伸缩盒对象的子元素的排列方式 */
+    -webkit-box-orient: vertical;
+}
+/*.description span:first-child {*/
+/*    display: inline-block;*/
+/*    color: #ffff;*/
+/*    background-color: red;*/
+/*    width: 55px;*/
+/*    height: 18px;*/
+/*    text-align: center;*/
+/*    margin-right: 3px;*/
+/*}*/
+.description span:last-child {
+    color: red;
+}
+.brand {
+    margin-top: 10px;
+    padding: 0 3px;
+}
+.brand span:first-child{
+    float: left;
+    margin-right: 2px;
+    width: 17px;
+    height: 17px;
+    background: url("../images/taobao.png") no-repeat -212px -199px ;
+}
+.brand span:nth-of-type(2){
+    float: left;
+    width: 17px;
+    height: 17px;
+    background: url("../images/taobao.png") no-repeat -268px -134px ;
+
+}
+.brand span:last-child{
+    float: right;
+    width: 18px;
+    height: 18px;
+    background: url("../images/kefu.png") no-repeat -434px -86px;
+}
+.footer {
+    height: 320px;
+    background-color:#fff;
+    padding: 20px 40px;
+    margin-top: 7px;
+}
+.company-logo{
+    width: 300px;
+    height: 70px;
+    line-height: 70px;
+}
+.introduce {
+    float: left;
+}
+.company-logo img {
+    width: 70px;
+    margin-right: 10px;
+    vertical-align: top;
+}
+.company-logo a {
+    font-size: 40px;
+    font-weight: 700;
+    color: #1C1C1C;
+}
+.company-logo a {
+    text-decoration: none;
+    color: #1C1C1C;
+}
+.footer p {
+    display: inline-block;
+    margin-left: 10px;
+    margin-top: 11px;
+    font-size: 17px;
+    color:#1C1C1C ;
+}
+.service {
+    margin-top: 30px!important;
+    margin-left: 0!important;
+    color: #337AB7!important;
+    font-size: 19px!important;
+}
+.footer i {
+    font-size: 16px;
+    color: #337AB7;
+}
+.contact {
+    float: left;
+    font-size: 20px;
+    margin-top: 60px;
+    margin-left: 100px;
+}
+.contact dt {
+    color: #1C1C1C;
+}
+.contact dd {
+    font-size: 16px;
+    margin-top: 5px;
+}
+.contact dd a:hover {
+    color: #1C1C1C;
+}
+.contact i {
+    margin-right: 2px;
+    color:#1C1C1C ;
+    font-size: 18px;
+    font-weight: 700;
+}
+.join {
+    margin-top: 50px;
+    width: 400px;
+    float: right;
+}
+.page-divide {
+    margin-left: 50%;
+    transform: translateX(-20%);
+}
+.join h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+.back-top {
+    position: fixed;
+    display: inline-block;
+    top: 830px;
+    right: 40px;
+    text-align: center;
+    border: 1px solid ;
+    width: 35px;
+    height: 35px;
+    line-height: 30px;
+    background-color:#337AB7;
+}
+.back-top a {
+    font-size: 30px;
+    color: #fff;
+}
+
+
+
