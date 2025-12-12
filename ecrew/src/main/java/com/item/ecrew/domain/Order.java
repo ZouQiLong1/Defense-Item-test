@@ -11,6 +11,7 @@ public class Order {
     private Date date;
     private String number;
     private Commodity commodity;
+    private User user;
 
     public Commodity getCommodity() {
         return commodity;
